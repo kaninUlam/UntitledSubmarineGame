@@ -11,8 +11,8 @@ public class Movement : MonoBehaviour
     [HideInInspector] public float VerticalVelocity;
     [HideInInspector] public float HorizontalVelocity;
 
-    public float Speed = 8;
-    public float JumpSpeed = 15f;
+    public float _Speed = 8;
+    public float _JumpSpeed = 15f;
 
     CapsuleCollider2D _capsule;
     Rigidbody2D _rb;
@@ -36,7 +36,7 @@ public class Movement : MonoBehaviour
     }
     public void Move(float input)
     {
-        HorizontalVelocity = input * Speed;
+        HorizontalVelocity = input * _Speed;
     }
     void FixedUpdate()
     {
@@ -44,7 +44,7 @@ public class Movement : MonoBehaviour
 
         if (Jumping)
         {
-            VerticalVelocity = JumpSpeed;
+            VerticalVelocity = _JumpSpeed;
             Jumping = false;
         }
         else

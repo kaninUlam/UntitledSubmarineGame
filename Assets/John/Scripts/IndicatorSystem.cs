@@ -37,7 +37,6 @@ public class IndicatorSystem : MonoBehaviour
             if(ray.collider != null)
             {
                 Indicator.transform.position = ray.point;
-                Debug.Log(ray.point);
             }
 
             //if the target is visible to the camera 
