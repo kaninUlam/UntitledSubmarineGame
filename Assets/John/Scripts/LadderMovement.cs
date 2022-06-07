@@ -6,8 +6,8 @@ using UnityEngine;
 // you need to assign the Rigidbody2d to this script as well as change the tag of the ladder gameobject to the tag of "Ladder"
 public class LadderMovement : MonoBehaviour
 {
-    private float vertical;
-    private float speed = 8f;
+    [HideInInspector]public float vertical;
+    public float speed = 2f;
     private bool isladder;
     private bool isclimbing;
 
@@ -17,7 +17,6 @@ public class LadderMovement : MonoBehaviour
     {
 
         // get the button press for moving up and down of the ladder which is the buttons that are assigned in the input vertical.
-        vertical = Input.GetAxis("Vertical");
 
         if (isladder && Mathf.Abs(vertical) > 0f)
         {
@@ -37,7 +36,7 @@ public class LadderMovement : MonoBehaviour
         // re enables the gravity of the character !!!!! important !!!!! change the value to what is suited for the game.
         else
         {
-            rb.gravityScale = 4f;
+            rb.gravityScale = 1f;
         }
     }
 
@@ -47,6 +46,7 @@ public class LadderMovement : MonoBehaviour
         if (collision.CompareTag("Ladder"))
         {
             isladder = true;
+            
         }
     }
 
@@ -58,5 +58,10 @@ public class LadderMovement : MonoBehaviour
             isladder = false;
             isclimbing = false;
         }
+    }
+
+    public void Climb(float input)
+    {
+        vertical = input * speed;
     }
 }

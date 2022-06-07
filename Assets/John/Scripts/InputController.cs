@@ -6,9 +6,11 @@ public class InputController : MonoBehaviour
 {
     PlayerInput _playerInput;
     Movement _movement;
+    LadderMovement _climb;
     void Start()
     {
         _movement = GetComponent<Movement>();
+        _climb = GetComponent<LadderMovement>();
         _playerInput = new PlayerInput();
         /*_playerInput.PlayerMap.Jump.performed += c => _movement.Jump();*/
         _playerInput.Enable();
@@ -16,5 +18,6 @@ public class InputController : MonoBehaviour
     private void Update()
     {
         _movement.Move(_playerInput.PlayerMap.Move.ReadValue<float>());
+        _climb.Climb(_playerInput.PlayerMap.Climb.ReadValue<float>());
     }
 }

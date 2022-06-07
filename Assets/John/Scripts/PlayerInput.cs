@@ -35,6 +35,15 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": true
+                },
+                {
+                    ""name"": ""Climb"",
+                    ""type"": ""Value"",
+                    ""id"": ""30a0df8f-a333-4ea2-90f5-a4041558842b"",
+                    ""expectedControlType"": ""Axis"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": true
                 }
             ],
             ""bindings"": [
@@ -70,6 +79,50 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
                     ""action"": ""Move"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""b72f5c23-8fb2-4668-ba8f-43eb70b0e99a"",
+                    ""path"": """",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Climb"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": ""1D Axis"",
+                    ""id"": ""695d142d-a77d-4415-be9c-b362156d4c13"",
+                    ""path"": ""1DAxis"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Climb"",
+                    ""isComposite"": true,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": ""negative"",
+                    ""id"": ""ac2d524d-6eee-45b6-ad24-44ce48fb5416"",
+                    ""path"": ""<Keyboard>/s"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Climb"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""positive"",
+                    ""id"": ""e6b2347f-bf72-40ba-a57b-c4fcb4519ac2"",
+                    ""path"": ""<Keyboard>/w"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Climb"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
                 }
             ]
         }
@@ -79,6 +132,7 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
         // PlayerMap
         m_PlayerMap = asset.FindActionMap("PlayerMap", throwIfNotFound: true);
         m_PlayerMap_Move = m_PlayerMap.FindAction("Move", throwIfNotFound: true);
+        m_PlayerMap_Climb = m_PlayerMap.FindAction("Climb", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -139,11 +193,13 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
     private readonly InputActionMap m_PlayerMap;
     private IPlayerMapActions m_PlayerMapActionsCallbackInterface;
     private readonly InputAction m_PlayerMap_Move;
+    private readonly InputAction m_PlayerMap_Climb;
     public struct PlayerMapActions
     {
         private @PlayerInput m_Wrapper;
         public PlayerMapActions(@PlayerInput wrapper) { m_Wrapper = wrapper; }
         public InputAction @Move => m_Wrapper.m_PlayerMap_Move;
+        public InputAction @Climb => m_Wrapper.m_PlayerMap_Climb;
         public InputActionMap Get() { return m_Wrapper.m_PlayerMap; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -156,6 +212,9 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
                 @Move.started -= m_Wrapper.m_PlayerMapActionsCallbackInterface.OnMove;
                 @Move.performed -= m_Wrapper.m_PlayerMapActionsCallbackInterface.OnMove;
                 @Move.canceled -= m_Wrapper.m_PlayerMapActionsCallbackInterface.OnMove;
+                @Climb.started -= m_Wrapper.m_PlayerMapActionsCallbackInterface.OnClimb;
+                @Climb.performed -= m_Wrapper.m_PlayerMapActionsCallbackInterface.OnClimb;
+                @Climb.canceled -= m_Wrapper.m_PlayerMapActionsCallbackInterface.OnClimb;
             }
             m_Wrapper.m_PlayerMapActionsCallbackInterface = instance;
             if (instance != null)
@@ -163,6 +222,9 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
                 @Move.started += instance.OnMove;
                 @Move.performed += instance.OnMove;
                 @Move.canceled += instance.OnMove;
+                @Climb.started += instance.OnClimb;
+                @Climb.performed += instance.OnClimb;
+                @Climb.canceled += instance.OnClimb;
             }
         }
     }
@@ -170,5 +232,6 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
     public interface IPlayerMapActions
     {
         void OnMove(InputAction.CallbackContext context);
+        void OnClimb(InputAction.CallbackContext context);
     }
 }
