@@ -2,34 +2,38 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+
 public class PlayerCheckLadder : MonoBehaviour
 {
-    private bool _PlayerInZone;
-    public GameObject _Player;
+    public GameObject _falsefloor;
+    public GameObject _promp;
+    /*[HideInInspector]public bool _isPlayerInZone;*/
+    PlayerInput _interact;
 
-    private void Update()
+    private void Start()
     {
-        if(_PlayerInZone == true)
+        _interact = new PlayerInput();
+        _interact.Enable();
+    }
+    private void OnTriggerStay2D(Collider2D collision)
+    {
+        if (collision.gameObject.CompareTag("Player"))
         {
-            _Player.GetComponent<LadderMovement>().enabled = true;
-        }
-        else
-        {
-            _Player.GetComponent<LadderMovement>().enabled = false;
+            _promp.SetActive(true);
+            if (_interact.PlayerMap.Interact.WasPressedThisFrame())
+            {
+                Debug.Log("Pressed");
+                _falsefloor.SetActive(false);
+                _promp.SetActive(false);
+            }
         }
     }
-    private void OnTriggerEnter(Collider other)
+    private void OnTriggerExit2D(Collider2D collision)
     {
-        if (other.gameObject.tag == "Player")
-        {
-            _PlayerInZone = true;
-        }
+        /*_isPlayerInZone = false;*/
+        _falsefloor.SetActive(true);
+        _promp.SetActive(false);
     }
-    private void OnTriggerExit(Collider other)
-    {
-        if (other.gameObject.tag == "Player")
-        {
-            _PlayerInZone = false;
-        }
-    }
+
+    
 }
