@@ -6,37 +6,37 @@ using UnityEngine;
 // you need to assign the Rigidbody2d to this script as well as change the tag of the ladder gameobject to the tag of "Ladder"
 public class LadderMovement : MonoBehaviour
 {
-    [HideInInspector]public float vertical;
-    public float speed = 2f;
-    private bool isladder;
-    private bool isclimbing;
+    [HideInInspector]public float _vertical;
+    public float _speed = 2f;
+    private bool _isladder;
+    private bool _isclimbing;
 
-    [SerializeField] private Rigidbody2D rb;
+    [SerializeField] private Rigidbody2D _rb;
 
     void Update()
     {
 
         // get the button press for moving up and down of the ladder which is the buttons that are assigned in the input vertical.
 
-        if (isladder && Mathf.Abs(vertical) > 0f)
+        if (_isladder && Mathf.Abs(_vertical) > 0f)
         {
-            isclimbing = true;
+            _isclimbing = true;
         }
     }
 
     private void FixedUpdate()
     {
         // disables the gravity of the character and adds movement to the up and down value
-        if (isclimbing)
+        if (_isclimbing)
         {
-            rb.gravityScale = 0f;
-            rb.velocity = new Vector2(rb.velocity.x, vertical * speed);
+            _rb.gravityScale = 0f;
+            _rb.velocity = new Vector2(_rb.velocity.x, _vertical * _speed);
         }
 
         // re enables the gravity of the character !!!!! important !!!!! change the value to what is suited for the game.
         else
         {
-            rb.gravityScale = 1f;
+            _rb.gravityScale = 1f;
         }
     }
 
@@ -45,7 +45,7 @@ public class LadderMovement : MonoBehaviour
     {
         if (collision.CompareTag("Ladder"))
         {
-            isladder = true;
+            _isladder = true;
             
         }
     }
@@ -55,13 +55,13 @@ public class LadderMovement : MonoBehaviour
     {
         if (collision.CompareTag("Ladder"))
         {
-            isladder = false;
-            isclimbing = false;
+            _isladder = false;
+            _isclimbing = false;
         }
     }
 
     public void Climb(float input)
     {
-        vertical = input * speed;
+        _vertical = input * _speed;
     }
 }
