@@ -23,7 +23,7 @@ public class SpawnControllerScript : MonoBehaviour
     
     [Tooltip("value between 0 and 1. For example 0.4 = 40% chance to spawn on different floor")] public float chanceToBeOtherFloor;
     [Tooltip("maximum issues can spawn at any one time")] public int maxIssuesAtOnce;
-    int currentIssuesAtOnce;
+    [Tooltip("This value will auto fill")] public int currentIssuesAtOnce;
 
     // Start is called before the first frame update
     void Start()
@@ -35,14 +35,17 @@ public class SpawnControllerScript : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if(timer <= 0)
+        if(currentIssuesAtOnce < maxIssuesAtOnce)
 		{
-            spawnIssueObject();
-		}
-		else
-		{
-            timer -= Time.deltaTime;
-		}
+            if(timer <= 0)
+		    {
+                spawnIssueObject();
+		    }
+		    else
+		    {
+                timer -= Time.deltaTime;
+		    }
+		} 
     }
 
     public void spawnIssueObject()
@@ -111,5 +114,6 @@ public class SpawnControllerScript : MonoBehaviour
 		}
 
         availableRooms[Random.Range(0, availableRooms.Count + 1)].GetComponent<roomController>().selectIssueInRoom();
+        currentIssuesAtOnce++;
 	}
 }
