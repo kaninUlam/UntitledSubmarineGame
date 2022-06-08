@@ -1,0 +1,109 @@
+{
+    "name": "PlayerInput",
+    "maps": [
+        {
+            "name": "PlayerMap",
+            "id": "f8745886-11c2-40cb-8acd-3f6b6df25062",
+            "actions": [
+                {
+                    "name": "Move",
+                    "type": "Value",
+                    "id": "43cd472a-9186-4dfd-90f2-98a3a0758ec3",
+                    "expectedControlType": "Axis",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": true
+                },
+                {
+                    "name": "Climb",
+                    "type": "Value",
+                    "id": "30a0df8f-a333-4ea2-90f5-a4041558842b",
+                    "expectedControlType": "Axis",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": true
+                }
+            ],
+            "bindings": [
+                {
+                    "name": "1D Axis",
+                    "id": "7b37dfaf-3b9f-43df-b80f-01125299d48e",
+                    "path": "1DAxis",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Move",
+                    "isComposite": true,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "Negative",
+                    "id": "2c04f867-1ec1-4a97-9ce6-b9b02cce6b56",
+                    "path": "<Keyboard>/a",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Move",
+                    "isComposite": false,
+                    "isPartOfComposite": true
+                },
+                {
+                    "name": "Positive",
+                    "id": "5c52206b-114c-4cd7-8a46-c73890bda83e",
+                    "path": "<Keyboard>/d",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Move",
+                    "isComposite": false,
+                    "isPartOfComposite": true
+                },
+                {
+                    "name": "",
+                    "id": "b72f5c23-8fb2-4668-ba8f-43eb70b0e99a",
+                    "path": "",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Climb",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "1D Axis",
+                    "id": "695d142d-a77d-4415-be9c-b362156d4c13",
+                    "path": "1DAxis",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Climb",
+                    "isComposite": true,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "negative",
+                    "id": "ac2d524d-6eee-45b6-ad24-44ce48fb5416",
+                    "path": "<Keyboard>/s",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Climb",
+                    "isComposite": false,
+                    "isPartOfComposite": true
+                },
+                {
+                    "name": "positive",
+                    "id": "e6b2347f-bf72-40ba-a57b-c4fcb4519ac2",
+                    "path": "<Keyboard>/w",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Climb",
+                    "isComposite": false,
+                    "isPartOfComposite": true
+                }
+            ]
+        }
+    ],
+    "controlSchemes": []
+}
