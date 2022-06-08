@@ -5,19 +5,24 @@ using UnityEngine;
 public class roomController : MonoBehaviour
 {
     [Header ("Issue Controller")]
-    public bool maxIssues;
+    public bool maxIssuesMeet;
+    public int maxIssues;
     public int currentIssues;
 
     [Header ("Issue Controller")]
     public GameObject[] IssueObjects;
+    public SpawnControllerScript spawnController;
 
 
     public void selectIssueInRoom()
 	{
-        List<GameObject> list = checkAvailable();
+        List<GameObject> list = new List<GameObject>(checkAvailable());
 
-        list[Random.Range(0, list.Count + 1)].GetComponent<roomController>().selectIssueInRoom();
+        int roll = Random.Range(0, list.Count);
+        list[roll].GetComponent<repairable>().BreakDown();
+        list[roll].GetComponent<repairable>().parentRoom = gameObject.GetComponent<roomController>();
         currentIssues++;
+        checkMax();
 	}
 
 
@@ -34,5 +39,24 @@ public class roomController : MonoBehaviour
 		}
 
         return availableIssues;
+	}
+
+    public void checkMax()
+	{
+        if(currentIssues >= maxIssues)
+		{
+            maxIssuesMeet = true;
+		}
+		else
+		{
+            maxIssuesMeet = false;
+		}
+	}
+
+    public void removeIssue()
+	{
+        currentIssues--;
+        checkMax();
+        spawnController.removeCurrentIssue();
 	}
 }

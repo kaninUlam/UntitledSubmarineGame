@@ -104,16 +104,25 @@ public class SpawnControllerScript : MonoBehaviour
 
         //check to see if a room is currently got too many or not
         List<GameObject> availableRooms = new List<GameObject>();
-
         foreach(GameObject room in rooms)
 		{
-			if (!room.GetComponent<roomController>().maxIssues)
+			if (!room.GetComponent<roomController>().maxIssuesMeet)
 			{
                 availableRooms.Add(room);
 			}
 		}
 
-        availableRooms[Random.Range(0, availableRooms.Count + 1)].GetComponent<roomController>().selectIssueInRoom();
-        currentIssuesAtOnce++;
+        if(availableRooms.Count > 0)
+		{
+            availableRooms[Random.Range(0, availableRooms.Count)].GetComponent<roomController>().selectIssueInRoom();
+            currentIssuesAtOnce++;
+		}
+        
+        
+	}
+
+    public void removeCurrentIssue()
+	{
+        currentIssuesAtOnce--;
 	}
 }

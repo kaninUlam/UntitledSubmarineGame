@@ -44,6 +44,15 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": true
+                },
+                {
+                    ""name"": ""Interact"",
+                    ""type"": ""Button"",
+                    ""id"": ""f1c69734-1957-4180-b7ac-7d10a101d520"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -123,6 +132,17 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
                     ""action"": ""Climb"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""0bb3659c-0c47-4f5b-9d2a-cfa4c24caa97"",
+                    ""path"": ""<Keyboard>/e"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Interact"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -133,6 +153,7 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
         m_PlayerMap = asset.FindActionMap("PlayerMap", throwIfNotFound: true);
         m_PlayerMap_Move = m_PlayerMap.FindAction("Move", throwIfNotFound: true);
         m_PlayerMap_Climb = m_PlayerMap.FindAction("Climb", throwIfNotFound: true);
+        m_PlayerMap_Interact = m_PlayerMap.FindAction("Interact", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -194,12 +215,14 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
     private IPlayerMapActions m_PlayerMapActionsCallbackInterface;
     private readonly InputAction m_PlayerMap_Move;
     private readonly InputAction m_PlayerMap_Climb;
+    private readonly InputAction m_PlayerMap_Interact;
     public struct PlayerMapActions
     {
         private @PlayerInput m_Wrapper;
         public PlayerMapActions(@PlayerInput wrapper) { m_Wrapper = wrapper; }
         public InputAction @Move => m_Wrapper.m_PlayerMap_Move;
         public InputAction @Climb => m_Wrapper.m_PlayerMap_Climb;
+        public InputAction @Interact => m_Wrapper.m_PlayerMap_Interact;
         public InputActionMap Get() { return m_Wrapper.m_PlayerMap; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -215,6 +238,9 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
                 @Climb.started -= m_Wrapper.m_PlayerMapActionsCallbackInterface.OnClimb;
                 @Climb.performed -= m_Wrapper.m_PlayerMapActionsCallbackInterface.OnClimb;
                 @Climb.canceled -= m_Wrapper.m_PlayerMapActionsCallbackInterface.OnClimb;
+                @Interact.started -= m_Wrapper.m_PlayerMapActionsCallbackInterface.OnInteract;
+                @Interact.performed -= m_Wrapper.m_PlayerMapActionsCallbackInterface.OnInteract;
+                @Interact.canceled -= m_Wrapper.m_PlayerMapActionsCallbackInterface.OnInteract;
             }
             m_Wrapper.m_PlayerMapActionsCallbackInterface = instance;
             if (instance != null)
@@ -225,6 +251,9 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
                 @Climb.started += instance.OnClimb;
                 @Climb.performed += instance.OnClimb;
                 @Climb.canceled += instance.OnClimb;
+                @Interact.started += instance.OnInteract;
+                @Interact.performed += instance.OnInteract;
+                @Interact.canceled += instance.OnInteract;
             }
         }
     }
@@ -233,5 +262,6 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
     {
         void OnMove(InputAction.CallbackContext context);
         void OnClimb(InputAction.CallbackContext context);
+        void OnInteract(InputAction.CallbackContext context);
     }
 }

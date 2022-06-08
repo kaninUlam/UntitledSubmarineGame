@@ -44,3 +44,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e8a0c5ae40e47f040bc1bc50ed86a22b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  maxIssuesMeet: 0
+  maxIssues: 1
+  currentIssues: 0
+  IssueObjects: []
