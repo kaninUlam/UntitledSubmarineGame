@@ -17,5 +17,7 @@ public class SubmarineHealth : MonoBehaviour
     void TakeDamage(float num)
     {
         _currentSubHealth = _currentSubHealth - num;
+
+        healthbar.SetHealth(_currentSubHealth);
     }
 }
