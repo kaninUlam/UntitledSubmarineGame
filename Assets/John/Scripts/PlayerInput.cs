@@ -53,6 +53,15 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""SkillCheck"",
+                    ""type"": ""Button"",
+                    ""id"": ""8aa42405-699c-4a3f-8242-6a271cf93a59"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -143,6 +152,17 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
                     ""action"": ""Interact"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""6b1294f1-e5ff-4983-b306-920f1db35e5b"",
+                    ""path"": ""<Mouse>/leftButton"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""SkillCheck"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -154,6 +174,7 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
         m_PlayerMap_Move = m_PlayerMap.FindAction("Move", throwIfNotFound: true);
         m_PlayerMap_Climb = m_PlayerMap.FindAction("Climb", throwIfNotFound: true);
         m_PlayerMap_Interact = m_PlayerMap.FindAction("Interact", throwIfNotFound: true);
+        m_PlayerMap_SkillCheck = m_PlayerMap.FindAction("SkillCheck", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -216,6 +237,7 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
     private readonly InputAction m_PlayerMap_Move;
     private readonly InputAction m_PlayerMap_Climb;
     private readonly InputAction m_PlayerMap_Interact;
+    private readonly InputAction m_PlayerMap_SkillCheck;
     public struct PlayerMapActions
     {
         private @PlayerInput m_Wrapper;
@@ -223,6 +245,7 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
         public InputAction @Move => m_Wrapper.m_PlayerMap_Move;
         public InputAction @Climb => m_Wrapper.m_PlayerMap_Climb;
         public InputAction @Interact => m_Wrapper.m_PlayerMap_Interact;
+        public InputAction @SkillCheck => m_Wrapper.m_PlayerMap_SkillCheck;
         public InputActionMap Get() { return m_Wrapper.m_PlayerMap; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -241,6 +264,9 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
                 @Interact.started -= m_Wrapper.m_PlayerMapActionsCallbackInterface.OnInteract;
                 @Interact.performed -= m_Wrapper.m_PlayerMapActionsCallbackInterface.OnInteract;
                 @Interact.canceled -= m_Wrapper.m_PlayerMapActionsCallbackInterface.OnInteract;
+                @SkillCheck.started -= m_Wrapper.m_PlayerMapActionsCallbackInterface.OnSkillCheck;
+                @SkillCheck.performed -= m_Wrapper.m_PlayerMapActionsCallbackInterface.OnSkillCheck;
+                @SkillCheck.canceled -= m_Wrapper.m_PlayerMapActionsCallbackInterface.OnSkillCheck;
             }
             m_Wrapper.m_PlayerMapActionsCallbackInterface = instance;
             if (instance != null)
@@ -254,6 +280,9 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
                 @Interact.started += instance.OnInteract;
                 @Interact.performed += instance.OnInteract;
                 @Interact.canceled += instance.OnInteract;
+                @SkillCheck.started += instance.OnSkillCheck;
+                @SkillCheck.performed += instance.OnSkillCheck;
+                @SkillCheck.canceled += instance.OnSkillCheck;
             }
         }
     }
@@ -263,5 +292,6 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
         void OnMove(InputAction.CallbackContext context);
         void OnClimb(InputAction.CallbackContext context);
         void OnInteract(InputAction.CallbackContext context);
+        void OnSkillCheck(InputAction.CallbackContext context);
     }
 }

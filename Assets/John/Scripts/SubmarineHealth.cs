@@ -14,7 +14,8 @@ public class SubmarineHealth : MonoBehaviour
         _currentSubHealth = _maxSubHealth;
         healthbar.SetMaxHealth(_maxSubHealth);
     }
-    void TakeDamage(float num)
+
+    public void TakeDamage(float num)
     {
         _currentSubHealth = _currentSubHealth - num;
 

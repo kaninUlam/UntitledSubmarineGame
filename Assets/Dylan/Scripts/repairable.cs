@@ -17,11 +17,20 @@ public class repairable : MonoBehaviour
     public float health;
     public float damage;
     public float repairSpeed;
+    public float damageToSub;
+    public float healthThreshHold;
+    bool repairing;
+    public float chanceForSkillCheck;
 
+    [Header("Other")]
+    public GameObject skillCheck;
+    GameObject skillCheckParent;
+    public roomController parentRoom;
+    SubmarineHealth subController;
     bool playerInZone;
     PlayerInput _playerInput;
-    public roomController parentRoom;
-
+    bool inSkillCheck;
+    GameObject skillcheckObj;
     
 
     // Start is called before the first frame update
@@ -39,6 +48,9 @@ public class repairable : MonoBehaviour
         _playerInput.Enable();
 
         enableHealthBar(2);
+
+        subController = GameObject.Find("SubHealth").GetComponent<SubmarineHealth>();
+        skillCheckParent = GameObject.Find("Canvas");
     }
 
 	public void Update()
@@ -49,18 +61,37 @@ public class repairable : MonoBehaviour
 			{
                 health += repairSpeed;
                 healthBar.size = new Vector2(health / 100, 1);
+                repairing = true;
+
+                float roll = Random.Range(0, 1f);
+                if(roll < chanceForSkillCheck && !inSkillCheck)
+				{
+                   inSkillCheck = true;
+
+                    spawnSkillCheck();
+				}
 
                 if(health >= 100)
 				{
                     repaired();
 				}
 			}
+			else
+			{
+                repairing = false;
+			}
 		}
 
-		if (isBroken && !_playerInput.PlayerMap.Interact.inProgress)
+		if (isBroken && !repairing)
 		{
             health -= damage;
+            if(health <= 0){ health = 0; }
             healthBar.size = new Vector2(health / 100, 1);
+		}
+
+        if(health <= healthThreshHold)
+		{
+            subController.TakeDamage(damageToSub);
 		}
 	}
 
@@ -79,6 +110,11 @@ public class repairable : MonoBehaviour
 		{
             repairIcon.SetActive(false);
             playerInZone = false;
+            repairing = false;
+			if (inSkillCheck)
+			{
+                skillcheckObj.GetComponent<skillCheck>().playerLeftEarly();
+			}
 		}
     }
 
@@ -95,6 +131,7 @@ public class repairable : MonoBehaviour
     public void repaired()
 	{
         isBroken = false;
+        repairing = false;
         health = 100;
 
         //turn the indicator on
@@ -104,6 +141,11 @@ public class repairable : MonoBehaviour
         playerInZone = false;
         parentRoom.removeIssue();
         enableHealthBar(2);
+
+		if (inSkillCheck)
+		{
+            Destroy(skillcheckObj);
+		}
 	}
 
     void enableHealthBar(int i)
@@ -118,6 +160,28 @@ public class repairable : MonoBehaviour
 		{
             healthBar.enabled = false;
             healthBarBack.enabled = false;
+		}
+	}
+
+    void spawnSkillCheck()
+	{
+        skillcheckObj = Instantiate(skillCheck, skillCheckParent.transform);
+        skillcheckObj.GetComponent<skillCheck>().repairing = gameObject.GetComponent<repairable>();
+	}
+
+    public void skillCheckGains(float num)
+	{
+        health += num;
+        inSkillCheck = false;
+
+        if(health >= 100)
+		{
+            health = 100;
+            repaired();
+		}
+		else if(health <= 0)
+		{
+            health = 0;
 		}
 	}
 }
