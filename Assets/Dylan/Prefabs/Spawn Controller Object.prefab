@@ -1,6 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!1 &2841847411448474624
+--- !u!1 &6401051545659685933
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -8,22 +8,22 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 4044732491213494781}
-  - component: {fileID: -6926048140901219773}
+  - component: {fileID: 6401051545659685931}
+  - component: {fileID: 6401051545659685930}
   m_Layer: 0
-  m_Name: Room Controller Object
+  m_Name: Spawn Controller Object
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &4044732491213494781
+--- !u!4 &6401051545659685931
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2841847411448474624}
+  m_GameObject: {fileID: 6401051545659685933}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -0.49923557, y: 0.22943214, z: 0.043760117}
   m_LocalScale: {x: 1, y: 1, z: 1}
@@ -32,19 +32,32 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &-6926048140901219773
+--- !u!114 &6401051545659685930
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2841847411448474624}
+  m_GameObject: {fileID: 6401051545659685933}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e8a0c5ae40e47f040bc1bc50ed86a22b, type: 3}
+  m_Script: {fileID: 11500000, guid: 581af21adcf597c41b8dc0edcf6a1497, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxIssuesMeet: 0
-  maxIssues: 1
-  currentIssues: 0
-  IssueObjects: []
+  player: {fileID: 0}
+  timer: 0
+  minTimeBetween: 10
+  maxTimeBetween: 15
+  upstairsMiddleRoom: {fileID: 0}
+  downstairsMiddleRoom: {fileID: 0}
+  upstairsRooms:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  downstairsRooms:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  chanceToBeOtherFloor: 0.5
+  maxIssuesAtOnce: 5
+  currentIssuesAtOnce: 0
