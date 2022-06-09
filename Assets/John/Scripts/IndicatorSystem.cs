@@ -4,17 +4,28 @@ using UnityEngine;
 
 public class IndicatorSystem : MonoBehaviour
 {
-
+    //johns Variables
     public GameObject Indicator;
     public GameObject Target;
     public bool isOn;
 
     Renderer rd;
+
+
+    //Dylans Variables
+    Vector3 targetPosition;
+    Transform pointerRefrence;
+
     // Start is called before the first frame update
     void Start()
     {
+        //john
         rd = GetComponent<Renderer>();
         isOn = false;
+
+        //Dylan
+        targetPosition = gameObject.transform.position;
+        pointerRefrence = transform.GetChild(0);
     }
 
     // Update is called once per frame
@@ -22,7 +33,13 @@ public class IndicatorSystem : MonoBehaviour
     {
 		if (isOn)
 		{
-            // if target is not visible to camera
+            DylanMethod();
+		}
+    }
+
+    public void johnsMethod()
+	{
+        // if target is not visible to camera
             if(rd.isVisible == false)
             {
                 if(Indicator.activeSelf == false)
@@ -41,10 +58,7 @@ public class IndicatorSystem : MonoBehaviour
                 if(ray.collider != null)
                 {
                     Indicator.transform.position = ray.point;
-                }
-
-                //if the target is visible to the camera 
-                else
+                }else //if the target is visible to the camera 
                 {
                     if (Indicator.activeSelf == true)
                     {
@@ -52,6 +66,17 @@ public class IndicatorSystem : MonoBehaviour
                     }
                 }
             }
-		}
-    }
+	}
+
+    public void DylanMethod()
+	{
+        Indicator.SetActive(true);
+        Vector3 toPos = targetPosition;
+        Vector3 fromPos = Camera.main.transform.position;
+        fromPos.z = 0f;
+        Vector3 dir = (toPos - fromPos).normalized;
+        float angle = Mathf.Atan2(dir.y, dir.x) * Mathf.Rad2Deg;
+        if (angle < 0){ angle += 360; }
+        pointerRefrence.localEulerAngles = new Vector3(0, 0, angle);
+	}
 }

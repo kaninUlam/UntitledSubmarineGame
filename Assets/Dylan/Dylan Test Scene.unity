@@ -3502,6 +3502,10 @@ PrefabInstance:
       propertyPath: Target
       value: 
       objectReference: {fileID: 291390204}
+    - target: {fileID: 5461101550734251463, guid: f3eec6564d4302f43a8a7038929994f7, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 7434148787815234478, guid: f3eec6564d4302f43a8a7038929994f7, type: 3}
       propertyPath: m_Name
       value: Repairable
