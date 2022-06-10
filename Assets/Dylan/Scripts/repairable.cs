@@ -26,11 +26,14 @@ public class repairable : MonoBehaviour
     public GameObject skillCheck;
     GameObject skillCheckParent;
     public roomController parentRoom;
+    public GameObject pointerPrefab;
     SubmarineHealth subController;
     bool playerInZone;
     PlayerInput _playerInput;
     bool inSkillCheck;
     GameObject skillcheckObj;
+    GameObject pointerParent;
+    GameObject pointer;
     
 
     // Start is called before the first frame update
@@ -41,7 +44,7 @@ public class repairable : MonoBehaviour
         healthBar = transform.GetChild(2).GetChild(0).GetComponent<SpriteRenderer>();
         healthBarBack = transform.GetChild(2).GetChild(1).GetComponent<SpriteRenderer>();
 
-        repairIcon = transform.GetChild(1).gameObject;
+        repairIcon = transform.GetChild(0).gameObject;
         playerInZone = false;
 
         _playerInput = new PlayerInput();
@@ -51,6 +54,7 @@ public class repairable : MonoBehaviour
 
         subController = GameObject.Find("SubHealth").GetComponent<SubmarineHealth>();
         skillCheckParent = GameObject.Find("Canvas");
+        pointerParent = GameObject.Find("Window Notification pointer");
     }
 
 	public void Update()
@@ -126,6 +130,8 @@ public class repairable : MonoBehaviour
         gameObject.GetComponent<IndicatorSystem>().isOn = true;
         rend.sprite = brokenSprite;
         enableHealthBar(1);
+        pointer = Instantiate(pointerPrefab, pointerParent.transform);
+        gameObject.GetComponent<IndicatorSystem>().pointerRefrence = pointer.GetComponent<RectTransform>();
 	}
 
     public void repaired()
@@ -146,6 +152,7 @@ public class repairable : MonoBehaviour
 		{
             Destroy(skillcheckObj);
 		}
+        Destroy(pointer);
 	}
 
     void enableHealthBar(int i)

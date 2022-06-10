@@ -14,7 +14,8 @@ public class IndicatorSystem : MonoBehaviour
 
     //Dylans Variables
     Vector3 targetPosition;
-    Transform pointerRefrence;
+    public RectTransform pointerRefrence;
+    [SerializeField] private Camera uiCamera;
 
     // Start is called before the first frame update
     void Start()
@@ -25,7 +26,9 @@ public class IndicatorSystem : MonoBehaviour
 
         //Dylan
         targetPosition = gameObject.transform.position;
-        pointerRefrence = transform.GetChild(0);
+        
+
+        uiCamera = GameObject.Find("Main Camera").GetComponent<Camera>();
     }
 
     // Update is called once per frame
@@ -34,7 +37,7 @@ public class IndicatorSystem : MonoBehaviour
 		if (isOn)
 		{
             DylanMethod();
-		}
+		} 
     }
 
     public void johnsMethod()
@@ -70,7 +73,7 @@ public class IndicatorSystem : MonoBehaviour
 
     public void DylanMethod()
 	{
-        Indicator.SetActive(true);
+        //Indicator.SetActive(true);
         Vector3 toPos = targetPosition;
         Vector3 fromPos = Camera.main.transform.position;
         fromPos.z = 0f;
@@ -78,5 +81,28 @@ public class IndicatorSystem : MonoBehaviour
         float angle = Mathf.Atan2(dir.y, dir.x) * Mathf.Rad2Deg;
         if (angle < 0){ angle += 360; }
         pointerRefrence.localEulerAngles = new Vector3(0, 0, angle);
+
+        float borderSize = 50;
+        Vector3 targetPositionScreenPoint = Camera.main.WorldToScreenPoint(targetPosition);
+        bool isOffScreen = targetPositionScreenPoint.x <= borderSize || targetPositionScreenPoint.x >= Screen.width - borderSize || targetPositionScreenPoint.y <= borderSize || targetPositionScreenPoint.x >= Screen.height - borderSize;
+
+		if (isOffScreen)
+		{
+            Vector3 cappedTargetScreenPos = targetPositionScreenPoint;
+            if (cappedTargetScreenPos.x <= borderSize) cappedTargetScreenPos.x = borderSize;
+            if (cappedTargetScreenPos.x >= Screen.width - borderSize) cappedTargetScreenPos.x = Screen.width - borderSize;
+            if (cappedTargetScreenPos.y <= borderSize) cappedTargetScreenPos.y = borderSize;
+            if (cappedTargetScreenPos.y >= Screen.height - borderSize) cappedTargetScreenPos.y = Screen.height - borderSize;
+
+            Vector3 pointerWorldPos = uiCamera.ScreenToWorldPoint(cappedTargetScreenPos);
+            pointerRefrence.position = pointerWorldPos;
+            pointerRefrence.localPosition = new Vector3(pointerRefrence.localPosition.x, pointerRefrence.localPosition.y, 0);
+		}
+		else
+		{
+            Vector3 pointerWorldPos = uiCamera.ScreenToWorldPoint(targetPositionScreenPoint);
+            pointerRefrence.position = pointerWorldPos;
+            pointerRefrence.localPosition = new Vector3(pointerRefrence.localPosition.x, pointerRefrence.localPosition.y, 0);
+		}
 	}
 }

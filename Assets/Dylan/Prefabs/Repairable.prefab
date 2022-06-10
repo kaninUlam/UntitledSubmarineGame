@@ -412,6 +412,7 @@ MonoBehaviour:
   chanceForSkillCheck: 0.0005
   skillCheck: {fileID: 7014195160495387774, guid: 0081a3b1f374ae54c8fc47be6c7de64b, type: 3}
   parentRoom: {fileID: 0}
+  pointerPrefab: {fileID: 6560180148033650405, guid: 8ca75e59128f32547a3e603bf245cf34, type: 3}
 --- !u!61 &7835523820099367003
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -453,6 +454,7 @@ MonoBehaviour:
   Indicator: {fileID: 5461101550734251463}
   Target: {fileID: 0}
   isOn: 0
+  uiCamera: {fileID: 0}
 --- !u!1 &7572472704950294337
 GameObject:
   m_ObjectHideFlags: 0
