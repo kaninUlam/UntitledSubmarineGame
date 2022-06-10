@@ -29,6 +29,7 @@ public class PlayerCheckLadder : MonoBehaviour
     {
         if (collision.gameObject.CompareTag("Player"))
         {
+            collision.gameObject.GetComponent<LadderMovement>().enabled = true;
             _promp.SetActive(true);
             _isPlayerInZone = true;
 
@@ -36,6 +37,7 @@ public class PlayerCheckLadder : MonoBehaviour
     }
     private void OnTriggerExit2D(Collider2D collision)
     {
+        collision.gameObject.GetComponent<LadderMovement>().enabled = false;
         _isPlayerInZone = false;
         _falsefloor.SetActive(true);
         _promp.SetActive(false);
