@@ -13,10 +13,19 @@ public class GameManager : MonoBehaviour
     public GameObject _youWinScreen;
     public GameObject _youLoseScreen;
     public GameObject _timer;
+
+
+    public static int perfectCount;
+    public static int OkayCount;
+    public static int MissCount;
+    GameObject analytics;
+
     private void Start()
     {
         /*_timeRemaining = GetComponent<Timer>();
         _checkHealth = GetComponent<SubmarineHealth>();*/
+
+        analytics = GameObject.Find("Analytics controller");
     }
 
     private void Update()
@@ -34,12 +43,21 @@ public class GameManager : MonoBehaviour
 
     void YouWin()
     {
-        _youWinScreen.SetActive(true); 
+        _youWinScreen.SetActive(true);
+        sendInfo();
     }
 
     void YouLose()
     {
         _youLoseScreen.SetActive(true);
+        sendInfo();
     }
+
+    void sendInfo()
+	{
+        analytics.GetComponent<GameAna>().sendPerfects(perfectCount);
+        analytics.GetComponent<GameAna>().sendOkays(OkayCount);
+        analytics.GetComponent<GameAna>().sendMisses(MissCount);
+	}
 
 }

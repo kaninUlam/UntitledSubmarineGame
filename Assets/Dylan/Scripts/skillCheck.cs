@@ -56,13 +56,16 @@ public class skillCheck : MonoBehaviour
 		if(value >= minOkayValue && value < maxOkayValue)
 		{
 			repairing.skillCheckGains(OkayGain);
+			GameManager.OkayCount++;
 		}else if(value >= minPerfectValue && value < maxPerfectValue)
 		{
 			repairing.skillCheckGains(PerfectGain);
+			GameManager.perfectCount++;
 		}
 		else
 		{
 			repairing.skillCheckGains(MissGain);
+			GameManager.MissCount++;
 		}
 
 		Destroy(gameObject);
