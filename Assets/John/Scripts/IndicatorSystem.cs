@@ -80,7 +80,7 @@ public class IndicatorSystem : MonoBehaviour
         Vector3 dir = (toPos - fromPos).normalized;
         float angle = Mathf.Atan2(dir.y, dir.x) * Mathf.Rad2Deg;
         if (angle < 0){ angle += 360; }
-        pointerRefrence.localEulerAngles = new Vector3(0, 0, angle);
+        //pointerRefrence.localEulerAngles = new Vector3(0, 0, angle);
 
         float borderSize = 50;
         Vector3 targetPositionScreenPoint = Camera.main.WorldToScreenPoint(targetPosition);
